@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Persons</title>
     <style>
         table {
@@ -10,7 +9,7 @@
             border-collapse: collapse;
         }
         table, th, td {
-            border: 1px solid #ff0000;
+            border: 1px solid black;
         }
         th, td {
             padding: 8px;
@@ -27,6 +26,7 @@
         <th>Name</th>
         <th>Age</th>
         <th>Gender</th>
+        <th>Addresses</th>
     </tr>
     </thead>
     <tbody>
@@ -35,6 +35,13 @@
         <td th:text="${person.name}"></td>
         <td th:text="${person.age}"></td>
         <td th:text="${person.gender}"></td>
+        <td>
+            <ul>
+                <li th:each="address : ${person.addresses}">
+                    <span th:text="${address.city} + ', ' + ${address.street} + ', ' + ${address.houseNumber}"></span>
+                </li>
+            </ul>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -48,6 +55,15 @@
     <label for="gender">Gender:</label>
     <input type="text" id="gender" name="gender" required><br><br>
     <button type="submit">Add Person</button>
+</form>
+
+<h2>Add Address to Existing Person</h2>
+<form action="/persons/add-address" method="post">
+    <label for="personId">Person ID:</label>
+    <input type="number" id="personId" name="personId" required><br><br>
+    <label for="address">Address (City, Street, House):</label>
+    <input type="text" id="address" name="address" required><br><br>
+    <button type="submit">Add Address</button>
 </form>
 </body>
 </html>
